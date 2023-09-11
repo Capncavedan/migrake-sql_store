@@ -42,7 +42,9 @@ class Migrake::SQLStore
   def write(set)
     @db.transaction do
       @db[:migrake_tasks].truncate
-      @db[:migrake_tasks].insert_multiple(set.to_a) { |task| { task: task } }
+      set.to_a.each do |task|
+        @db[:migrake_tasks].insert(task: task)
+      end
     end
   end
 end

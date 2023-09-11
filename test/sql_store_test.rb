@@ -51,7 +51,9 @@ describe Migrake::SQLStore do
   end
 
   def save_in_source(set)
-    source[:migrake_tasks].insert_multiple(set) { |task| { task: task } }
+    set.each do |task|
+      source[:migrake_tasks].insert(task: task)
+    end
   end
 
   def source
